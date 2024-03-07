@@ -1,0 +1,90 @@
+CREATE TABLE ProductCategory (
+	CategoryName VARCHAR(55) NOT NULL
+)
+
+select rowid, categoryname from ProductCategory
+
+INSERT INTO ProductCategory (categoryname)
+VALUES ("Hot drink")
+
+SELECT * FROM ProductCategory 
+
+CREATE TABLE Customer (
+  	FirstName varchar(55),
+  	LastName varchar(55)
+  )
+
+SELECT rowid, firstname, lastname from Customer
+
+INSERT INTO Customer (FirstName,LastName) VALUES (
+  'James',
+  'Bond'
+); 
+
+CREATE TABLE Product (
+	ProductName varchar(55),
+  	CategoryId INT not NULL,
+  	Price	REAL,
+  	FOREIGN KEY (CategoryId) REFERENCES ProductCategory (rowid)
+)
+
+SELECT rowid, productname, categoryid, price from Product
+
+INSERT INTO Product (ProductName,CategoryId,Price) VALUES (
+  'Coffee',
+  '2',
+  '1'
+); 
+
+ SELECT productname, categoryname from Product
+ JOIN ProductCategory
+ ON Product.CategoryId=ProductCategory.rowid
+
+CREATE TABLE Orders(
+	CustomerId INT not NULL,
+  	DateOfOrder varchar(10),
+  	FOREIGN KEY (CustomerId) REFERENCES Customer(rowid)
+)
+
+select rowid, customerid, dateoforder from Orders
+
+INSERT INTO Orders (CustomerId,DateOfOrder) VALUES (
+  '2',
+  '12-Apr-20'
+); 
+
+
+CREATE TABLE OrderdDetails (
+	OrderId INT not null,
+  	ProductId INT not null,
+  	ProductQty INT,
+  FOREIGN KEY (OrderId) REFERENCES Orders(rowid),
+  FOREIGN KEY (ProductId) REFERENCES Product(rowid)
+)
+
+select Customer.FirstName, Customer.LastName, productname, productqty from OrderdDetails
+join Orders on OrderdDetails.OrderId = Orders.rowid
+JOIN Product on OrderdDetails.ProductId = Product.rowid
+JOIN Customer ON Orders.CustomerId = Customer.rowid
+
+INSERT INTO OrderDetails (OrderId,ProductId,ProductQuantity) VALUES (
+  '1',
+  '5',
+  '1'
+); 
+
+select orders.rowid, Customer.FirstName, Customer.LastName, productname, productqty from OrderdDetails
+join Orders on OrderdDetails.OrderId = Orders.rowid
+JOIN Product on OrderdDetails.ProductId = Product.rowid
+JOIN Customer ON Orders.CustomerId = Customer.rowid
+
+select orders.rowid, Customer.FirstName, Customer.LastName, productname, ProductCategory.CategoryName, productqty from OrderdDetails
+join Orders on OrderdDetails.OrderId = Orders.rowid
+JOIN Product on OrderdDetails.ProductId = Product.rowid
+JOIN Customer ON Orders.CustomerId = Customer.rowid
+JOIN ProductCategory on ProductCategory.rowid = Product.CategoryId
+
+
+
+
+
